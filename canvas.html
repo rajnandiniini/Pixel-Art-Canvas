@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Art Canvas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #222;
+      color: rgb(255, 255, 255);
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      font-size: 24px;
+    }
+
+    .canvas {
+      display: grid;
+      grid-template-columns: repeat(16, 25px);
+      grid-template-rows: repeat(16, 25px);
+      gap: 1px;
+      background-color: #333;
+      padding: 5px;
+      border-radius: 5px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .pixel {
+      width: 25px;
+      height: 25px;
+      background-color: #555;
+      border-radius: 2px;
+      transition: background 0.2s ease;
+    }
+
+    .pixel:hover {
+      opacity: 0.8;
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    }
+
+    .buttons {
+      margin-top: 15px;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-erase { background: #52a6fae4; color: white; }
+    .btn-clear { background: #52a6fae4; color: rgb(255, 255, 255); }
+
+    button:hover {
+      opacity: 0.8;
+    }
+
+    .pick-color {
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      color: #ffbe76;
+      text-decoration: underline;
+      margin-top:5px;
+    }
+
+    .pick-color:hover {
+      color: #ffd700;
+    }
+
+    #colorPicker {
+      display: none; /* Hidden input */
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎨 CSS Pixel Art Canvas</h1>
+  
+  <span class="pick-color" onclick="document.getElementById('colorPicker').click()">Pick Colour</span>
+  <input type="color" id="colorPicker">
+
+  <div class="canvas" id="canvas"></div>
+
+  <div class="buttons">
+    <button class="btn-erase" onclick="setEraseMode()">🧽 Eraser</button>
+    <button class="btn-clear" onclick="clearCanvas()">🗑️ Clear Canvas</button>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const colorPicker = document.getElementById("colorPicker");
+    let selectedColor = "#ff4757"; // Default color
+    let eraseMode = false;
+
+    // Create 16x16 grid
+    for (let i = 0; i < 256; i++) {
+      let pixel = document.createElement("div");
+      pixel.classList.add("pixel");
+      pixel.addEventListener("click", function () {
+        pixel.style.backgroundColor = eraseMode ? "#555" : selectedColor;
+      });
+      canvas.appendChild(pixel);
+    }
+
+    // Update selected color
+    colorPicker.addEventListener("input", function () {
+      eraseMode = false;
+      selectedColor = colorPicker.value;
+    });
+
+    // Set Eraser Mode
+    function setEraseMode() {
+      eraseMode = true;
+    }
+
+    // Clear the entire canvas
+    function clearCanvas() {
+      document.querySelectorAll(".pixel").forEach(pixel => {
+        pixel.style.backgroundColor = "#555";
+      });
+    }
+  </script>
+
+</body>
+</html>
