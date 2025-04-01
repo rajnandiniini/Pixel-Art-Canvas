@@ -33,7 +33,7 @@ A simple web-based pixel art drawing tool built with HTML, CSS, and JavaScript.
 Try it here: **[Pixel Art Canvas](https://rajnandiniini.github.io/Pixel-Art-Canvas/canvas.html)**  
 
 
-## 📷 Watch the Video
+## 🎥 Watch the Video
 
 Click below to watch the video:
 
