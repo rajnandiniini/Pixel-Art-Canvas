@@ -28,9 +28,6 @@ A simple web-based pixel art drawing tool built with HTML, CSS, and JavaScript.
 <img src="https://raw.githubusercontent.com/rajnandiniini/Pixel-Art-Canvas/main/images/pic1.png" width="300" height="auto">
 <img src="https://raw.githubusercontent.com/rajnandiniini/Pixel-Art-Canvas/main/images/pic2.png" width="300" height="auto">
 
-## ⚙️ Setup  
-
-Try it here: **[Pixel Art Canvas](https://rajnandiniini.github.io/Pixel-Art-Canvas/canvas.html)**  
 
 
 ## 🎥 Watch the Video
@@ -38,3 +35,7 @@ Try it here: **[Pixel Art Canvas](https://rajnandiniini.github.io/Pixel-Art-Canv
 Click below to watch the video:
 
 [Watch Video](https://github.com/rajnandiniini/Pixel-Art-Canvas/raw/main/images/demo.mp4)
+
+## ⚙️ Setup  
+
+Try it here: **[Pixel Art Canvas](https://rajnandiniini.github.io/Pixel-Art-Canvas/canvas.html)**  
