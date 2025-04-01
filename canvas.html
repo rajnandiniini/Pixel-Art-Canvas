@@ -4,22 +4,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pixel Art Canvas</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
+    :root {
+      --primary: #2d3436;
+      --secondary: #636e72;
+      --accent: #00cec9;
+      --accent-hover: #81ecec;
+      --canvas-bg: #333;
+      --pixel-bg: #555;
+      --text: #ffffff;
+      --shadow: rgba(0, 206, 201, 0.3);
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #222;
-      color: rgb(255, 255, 255);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #2d3436 0%, #1e272e 100%);
+      color: var(--text);
       margin: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 20px;
     }
 
     h1 {
-      font-size: 24px;
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: var(--accent);
+      text-shadow: 0 0 10px var(--shadow);
+      font-weight: 800;
+      letter-spacing: 1px;
+      position: relative;
+      display: inline-block;
+    }
+
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .canvas-container {
+      background: rgba(45, 52, 54, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
     }
 
     .canvas {
@@ -27,110 +70,249 @@
       grid-template-columns: repeat(16, 25px);
       grid-template-rows: repeat(16, 25px);
       gap: 1px;
-      background-color: #333;
-      padding: 5px;
-      border-radius: 5px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      background-color: #222;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
     }
 
     .pixel {
       width: 25px;
       height: 25px;
-      background-color: #555;
+      background-color: var(--pixel-bg);
       border-radius: 2px;
       transition: background 0.2s ease;
+      cursor: pointer;
     }
 
     .pixel:hover {
       opacity: 0.8;
-      box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .color-tools {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      width: 100%;
+    }
+
+    .current-color {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background-color: #ff4757;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.2s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .current-color:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 12px var(--shadow);
+    }
+
+    .current-color::after {
+      content: 'Change';
+      position: absolute;
+      color: rgba(255, 255, 255, 0.9);
+      background: rgba(0, 0, 0, 0.4);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .current-color:hover::after {
+      opacity: 1;
+    }
+
+    .pick-color {
+      background: linear-gradient(to bottom, var(--accent), #00a8a3);
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .pick-color:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      background: linear-gradient(to bottom, #00b5b1, #008f8b);
+    }
+
+    #colorPicker {
+      display: none;
     }
 
     .buttons {
-      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      width: 100%;
     }
 
     button {
       padding: 10px 15px;
-      margin: 5px;
-      font-size: 16px;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
+      background: linear-gradient(to bottom, var(--accent), #00a8a3);
+      color: #fff;
+      font-weight: 600;
       cursor: pointer;
-      transition: 0.3s;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex: 1;
+      max-width: 160px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-
-    .btn-erase { background: #52a6fae4; color: white; }
-    .btn-clear { background: #52a6fae4; color: rgb(255, 255, 255); }
 
     button:hover {
-      opacity: 0.8;
+      background: linear-gradient(to bottom, #00b5b1, #008f8b);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
     }
 
-    .pick-color {
-      cursor: pointer;
-      font-size: 18px;
-      font-weight: bold;
-      color: #ffbe76;
-      text-decoration: underline;
-      margin-top:5px;
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    .pick-color:hover {
-      color: #ffd700;
+    button.active {
+      background: linear-gradient(to bottom, #6c5ce7, #5541d8);
     }
 
-    #colorPicker {
-      display: none; /* Hidden input */
+    .btn-clear { 
+      background: linear-gradient(to bottom, #ff7675, #d63031);
+    }
+
+    .btn-clear:hover {
+      background: linear-gradient(to bottom, #e06867, #b42728);
+    }
+
+    .status {
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.7;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .container {
+      animation: fadeIn 0.5s ease-out;
+      text-align: center;
+      max-width: 600px;
     }
   </style>
 </head>
 <body>
 
-  <h1>🎨 CSS Pixel Art Canvas</h1>
-  
-  <span class="pick-color" onclick="document.getElementById('colorPicker').click()">Pick Colour</span>
-  <input type="color" id="colorPicker">
+  <div class="container">
+    <h1><i class="fas fa-paint-brush"></i> Pixel Art Canvas</h1>
+    <p class="description">Create beautiful pixel art with this easy-to-use canvas. Create Art!</p>
+    
+    
+    <div class="canvas-container">
+      <div class="canvas" id="canvas"></div>
+      
+      <div class="color-tools">
+        <div class="current-color" id="currentColor" onclick="document.getElementById('colorPicker').click()"></div>
+        <div class="pick-color" onclick="document.getElementById('colorPicker').click()">
+          <i class="fas fa-palette"></i> Choose Color
+        </div>
+        <input type="color" id="colorPicker" value="#ff4757">
+      </div>
 
-  <div class="canvas" id="canvas"></div>
+      <div class="buttons">
+        <button class="btn-erase" id="eraseBtn" onclick="setEraseMode()">
+          <i class="fas fa-eraser"></i> Eraser
+        </button>
+        <button class="btn-clear" onclick="clearCanvas()">
+          <i class="fas fa-trash-alt"></i> Clear All
+        </button>
+      </div>
+    </div>
 
-  <div class="buttons">
-    <button class="btn-erase" onclick="setEraseMode()">🧽 Eraser</button>
-    <button class="btn-clear" onclick="clearCanvas()">🗑️ Clear Canvas</button>
+    <div class="status" id="status">Ready to draw</div>
   </div>
 
   <script>
     const canvas = document.getElementById("canvas");
     const colorPicker = document.getElementById("colorPicker");
+    const currentColorEl = document.getElementById("currentColor");
+    const eraseBtn = document.getElementById("eraseBtn");
+    const statusEl = document.getElementById("status");
     let selectedColor = "#ff4757"; // Default color
     let eraseMode = false;
+
+    // Set initial current color display
+    currentColorEl.style.backgroundColor = selectedColor;
 
     // Create 16x16 grid
     for (let i = 0; i < 256; i++) {
       let pixel = document.createElement("div");
       pixel.classList.add("pixel");
-      pixel.addEventListener("click", function () {
-        pixel.style.backgroundColor = eraseMode ? "#555" : selectedColor;
+      
+      pixel.addEventListener("click", function() {
+        pixel.style.backgroundColor = eraseMode ? "var(--pixel-bg)" : selectedColor;
       });
+      
       canvas.appendChild(pixel);
     }
 
     // Update selected color
-    colorPicker.addEventListener("input", function () {
-      eraseMode = false;
+    colorPicker.addEventListener("input", function() {
       selectedColor = colorPicker.value;
+      currentColorEl.style.backgroundColor = selectedColor;
+      eraseMode = false;
+      eraseBtn.classList.remove("active");
+      statusEl.textContent = "Drawing with " + selectedColor;
     });
 
     // Set Eraser Mode
     function setEraseMode() {
-      eraseMode = true;
+      eraseMode = !eraseMode;
+      if (eraseMode) {
+        eraseBtn.classList.add("active");
+        statusEl.textContent = "Eraser activated";
+      } else {
+        eraseBtn.classList.remove("active");
+        statusEl.textContent = "Drawing with " + selectedColor;
+      }
     }
 
     // Clear the entire canvas
     function clearCanvas() {
       document.querySelectorAll(".pixel").forEach(pixel => {
-        pixel.style.backgroundColor = "#555";
+        pixel.style.backgroundColor = "var(--pixel-bg)";
       });
+      statusEl.textContent = "Canvas cleared";
+      setTimeout(() => {
+        statusEl.textContent = eraseMode ? "Eraser activated" : "Drawing with " + selectedColor;
+      }, 1500);
     }
   </script>
 
