@@ -268,10 +268,10 @@
     let selectedColor = "#ff4757"; // Default color
     let eraseMode = false;
 
-    // Set initial current color display
+
     currentColorEl.style.backgroundColor = selectedColor;
 
-    // Create 16x16 grid
+ 
     for (let i = 0; i < 256; i++) {
       let pixel = document.createElement("div");
       pixel.classList.add("pixel");
@@ -283,7 +283,7 @@
       canvas.appendChild(pixel);
     }
 
-    // Update selected color
+
     colorPicker.addEventListener("input", function() {
       selectedColor = colorPicker.value;
       currentColorEl.style.backgroundColor = selectedColor;
@@ -292,7 +292,7 @@
       statusEl.textContent = "Drawing with " + selectedColor;
     });
 
-    // Set Eraser Mode
+
     function setEraseMode() {
       eraseMode = !eraseMode;
       if (eraseMode) {
@@ -304,7 +304,7 @@
       }
     }
 
-    // Clear the entire canvas
+
     function clearCanvas() {
       document.querySelectorAll(".pixel").forEach(pixel => {
         pixel.style.backgroundColor = "var(--pixel-bg)";
